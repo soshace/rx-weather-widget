@@ -1,0 +1,11 @@
+body {
+    background-color: lightgray;
+}
+
+.custom-panel {
+    margin: 15px;
+}
+
+.inline-block {
+    display: inline-block;
+}
