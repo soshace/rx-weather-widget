@@ -9,3 +9,11 @@ body {
 .inline-block {
     display: inline-block;
 }
+
+.imgTopAlign {
+    vertical-align: top;
+}
+
+.topMargin {
+    margin-top: 20px;
+}
