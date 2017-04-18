@@ -2,26 +2,35 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<div class="col-sm-4 topMargin">
-    <div class="card">
-        <div class="card-block">
-            <img id="dayImg" class="card-img-top inline-block imgTopAlign" src="" alt="Card image cap">
-            <div class="inline-block">
-                <h4 id="dayTitle" class="card-title"></h4>
-                <p id="dayType" class="card-text"></p>
+<div>
+    <div class="col-sm-4 top">
+        <div class="card">
+            <div class="card-block">
+                <img id="dayImg" class="card-img-top inline-block imgTopAlign" src="" alt="Card image cap">
+                <div class="inline-block">
+                    <h4 id="dayTitle" class="card-title"></h4>
+                    <p id="dayType" class="card-text"></p>
+                </div>
             </div>
+            <ul class="list-group list-group-flush">
+                <li id="dayTemp" class="list-group-item"></li>
+                <li id="dayAtmPres" class="list-group-item"></li>
+                <li id="dayWindSpeed" class="list-group-item"></li>
+            </ul>
         </div>
-        <ul class="list-group list-group-flush">
-            <li id="dayTemp" class="list-group-item"></li>
-            <li id="dayAtmPres" class="list-group-item"></li>
-            <li id="dayWindSpeed" class="list-group-item"></li>
-        </ul>
+    </div>
+    <div class="col-sm-7 top">
+        <div id="chartContainer"></div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.3.0/Rx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<script src="helpers.js"></script>
 <script src="index.js"></script>
 </body>
 </html>

@@ -1,30 +1,7 @@
-function getWeatherData() {
-    const weatherAPI = 'https://query.yahooapis.com/v1/public/yql?q=select%20item%2C%20wind%2C%20atmosphere%20from%20weather.forecast%20where%20woeid%20%3D%202487889&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
-    return new Promise(resolve => {
-        let xhr = new XMLHttpRequest();
-
-        xhr.open('GET', weatherAPI);
-        xhr.onreadystatechange = () => {
-            xhr.readyState == 4 && xhr.status == 200 && resolve(JSON.parse(xhr.response));
-        };
-
-        xhr.send()
-    });
-}
-
-function applyDayToContainer(day) {
-    document.getElementById('dayImg').src = day.img;
-    document.getElementById('dayTitle').innerHTML = day.title;
-    document.getElementById('dayType').innerHTML = day.type;
-    document.getElementById('dayTemp').innerHTML = `<b>Temperature:</b> ${day.temp} F`;
-    document.getElementById('dayAtmPres').innerHTML = `<b>Atmosphere pressure:</b> ${day.atmPressure} in`;
-    document.getElementById('dayWindSpeed').innerHTML = `<b>Wind speed:</b> ${day.windSpeed} mph`;
-}
-
-(function() {
+(function () {
     let retrieveStream = Rx.Observable.interval(60000)
         .startWith(0) // allows to perform an immediate execute
-        .map(() => Rx.Observable.fromPromise(getWeatherData()))
+        .map(() => Rx.Observable.fromPromise(Helper.getWeatherData()))
         .switch() // sets gotten observables to one sequence
         .map(data => {
             let basicItem = data.query.results.channel.item;
@@ -46,12 +23,36 @@ function applyDayToContainer(day) {
         };
     });
 
-    let forecastDaysStream = retrieveStream.map(entry => {
-        return {
-            days: entry.forecast
-        };
-    });
+    let forecastDaysStream = retrieveStream
+        .map(entry => {
+            return {
+                days: entry.forecast
+            };
+        })
+        .map(entry => {
+            let entryCopy = entry.days.slice(0);
+            entryCopy.shift();
 
-    currentDayWidgetStream.subscribe(day => applyDayToContainer(day));
-    forecastDaysStream.subscribe(next => console.log(next));
+            let configObj = {
+                x: ['x'],
+                low: ['Low Temperature'],
+                high: ['High Temperature']
+            };
+            entryCopy.map(el => {
+                configObj.x.push(el.date);
+                configObj.low.push(+el.low);
+                configObj.high.push(+el.high);
+            });
+
+            return configObj;
+        })
+        .map(config => {
+            return {
+                x: config.x,
+                data: [config.low, config.high]
+            }
+        });
+
+    currentDayWidgetStream.subscribe(day => Helper.applyDayToContainer(day));
+    forecastDaysStream.subscribe(config => Helper.drawChart('#chartContainer', config.x, config.data));
 })();
