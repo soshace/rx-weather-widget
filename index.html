@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>RxWidget</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css">
@@ -7,11 +8,18 @@
 </head>
 <body>
 <div>
+    <select id="citySelect" class="form-control citySelect">
+        <option value="2459115" selected>New York</option>
+        <option value="2487889">San Diego</option>
+        <option value="2123260">Saint Petersburg</option>
+    </select>
+</div>
+<div>
     <div class="col-sm-4 top">
         <div class="card">
             <div class="card-block">
                 <img id="dayImg" class="card-img-top inline-block imgTopAlign" src="" alt="Card image cap">
-                <div class="inline-block">
+                <div class="inline-block" style="max-width: 80%;">
                     <h4 id="dayTitle" class="card-title"></h4>
                     <p id="dayType" class="card-text"></p>
                 </div>

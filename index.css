@@ -19,3 +19,9 @@ body {
     vertical-align: top;
     display: inline-block;
 }
+
+.citySelect {
+    margin-left: 15px;
+    margin-top: 15px;
+    width: 20%;
+}

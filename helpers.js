@@ -1,6 +1,6 @@
 class Helper {
-    static getWeatherData() {
-        const weatherAPI = 'https://query.yahooapis.com/v1/public/yql?q=select%20item%2C%20wind%2C%20atmosphere%20from%20weather.forecast%20where%20woeid%20%3D%202487889&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
+    static getWeatherData(townId) {
+        const weatherAPI = `https://query.yahooapis.com/v1/public/yql?q=select%20item%2C%20wind%2C%20atmosphere%20from%20weather.forecast%20where%20woeid%20%3D%20${townId}&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`;
         return new Promise(resolve => {
             let xhr = new XMLHttpRequest();
 
@@ -22,15 +22,12 @@ class Helper {
         document.getElementById('dayWindSpeed').innerHTML = `<b>Wind speed:</b> ${day.windSpeed} mph`;
     }
 
-    static drawChart(containerSelector, xAxis, dataCollection) {
-        let data = [];
-        data.push(xAxis);
-
+    static drawChart(containerSelector, dataCollection) {
         return c3.generate({
             bindto: containerSelector,
             data: {
                 x: 'x',
-                columns: data.concat(dataCollection),
+                columns: dataCollection,
                 type: 'bar'
             },
             axis: {
